@@ -1,7 +1,7 @@
 import { getDocs, collection, query, orderBy, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useEffect, useState } from 'react';
-import { Post } from './post';
+import { Post } from './post/post';
 import { Typography } from '@mui/material';
 import { CreateForm } from '../../components/create-form';
 
