@@ -13,28 +13,42 @@ interface CreateFormData {
     content: string
 }
 
-export const CreateForm = ({ refreshPosts }: { refreshPosts: () => void }) => {
+interface Props {
+    type: string;
+    refreshElements: () => Promise<void>;
+    postId?: string;
+    handleCommentMode?: () => void;
+}
+
+export const CreateForm = (props: Props) => {
+    const { type, postId, refreshElements, handleCommentMode } = props;
     const [user] = useAuthState(auth);
-    const [postContent, setPostContent] = useState("");
+    const [cardContent, setCardContent] = useState("");
     const schema = yup.object().shape({
         content: yup.string().required("Can't be empty.")
     });
 
     const { register, handleSubmit, formState: { errors } } = useForm<CreateFormData>({
         resolver: yupResolver(schema)
-    })
+    });
 
+    const postsRef = collection(db, type == "post" ? "posts" : "comments");
 
-    const postsRef = collection(db, "posts");
-    const onCreatePost = async (data: CreateFormData) => {
+    const docConfig = {
+        username: user?.displayName || null,
+        postId: postId || null,
+        userId: user?.uid || null,
+        timeStamp: new Date
+
+    }
+    const onCreateContent = async (data: CreateFormData) => {
         await addDoc(postsRef, {
             ...data,
-            username: user?.displayName,
-            userId: user?.uid,
-            timeStamp: new Date
+            ...docConfig
         });
-        setPostContent('');
-        refreshPosts();
+        setCardContent('');
+        refreshElements();
+        (type == "comment" && handleCommentMode) && handleCommentMode();
     };
 
     return (
@@ -45,11 +59,22 @@ export const CreateForm = ({ refreshPosts }: { refreshPosts: () => void }) => {
                         <Avatar src={user?.photoURL || ""} />
                     </Grid2>
                     <Grid2 size="grow">
-                    <form onSubmit={handleSubmit(onCreatePost)}>
-                        <TextField {...register("content")} fullWidth placeholder='Wuff wuff!' value={postContent} onChange={(e)=>setPostContent(e.target.value)}/>
-                        <p style={{ color: "red" }}>{errors.content?.message}</p>
-                        <input type='submit' value={'Post'} />
-                    </form>
+                        <form onSubmit={handleSubmit(onCreateContent)}>
+                            <TextField {...register("content")} fullWidth placeholder='Wuff wuff!' value={cardContent} onChange={(e) => setCardContent(e.target.value)} />
+                            <p style={{ color: "red" }}>{errors.content?.message}</p>
+                            <input type='submit' value={'Post'} style={{
+                                borderRadius: '3px',
+                                fontWeight: 600,
+                                backgroundColor: '#748B75',
+                                color: '#ffffff',
+                                borderStyle: 'none',
+                                padding: 10,
+                                paddingLeft: 25,
+                                paddingRight: 25,
+                            }} />
+                            {/* Attachment Button */}
+
+                        </form>
                     </Grid2>
                 </Grid2>
             </CardContent>

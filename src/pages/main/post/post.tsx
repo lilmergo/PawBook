@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, Typography, Button, Box, Avatar, Grid2, IconButton, Icon, TextField } from "@mui/material";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import { CreateComment } from "../../../components/create-comment";
+import { CreateForm } from "../../../components/create-form";
 import { useLikes } from "./useLikes";
 import { useComments } from "./useComments";
 
@@ -70,13 +70,16 @@ export const Post = (props: Props) => {
                             {hasUserLiked ? <ThumbUpAltIcon style={{ color: '#748B75' }} /> : <ThumbUpAltIcon style={{ color: '#A3A89D' }} />}
                         </IconButton>
                         <Typography variant="body2" color="text.primary" display="inline">{likes?.length}</Typography>
+                        
                         {/* Comment Button */}
                         <IconButton onClick={handleCommentMode}>
                             <ChatBubbleIcon style={{ color: '#A3A89D' }} />
                         </IconButton>
+                        <Typography variant="body2" color="text.primary" display="inline">Reply</Typography>
+                        
                     </Box>
 
-                    {commentMode && <CreateComment refreshComments={getComments} postId={post.id} handleCommentMode={handleCommentMode} />}
+                    {commentMode && <CreateForm refreshElements={getComments} postId={post.id} handleCommentMode={handleCommentMode} type='comment'/>}
                     {commentsList?.map((comment) => <Post post={comment}/>)}
 
                 </Grid2>

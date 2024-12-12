@@ -20,7 +20,6 @@ export const Main = () => {
     const getPosts = async () => {
         const data = await getDocs(postsRef);
         setPostsList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })) as Post[]);
-        console.log('getPosts(): post list updated.')
     };
 
     useEffect(() => {
@@ -30,7 +29,7 @@ export const Main = () => {
     return (
         <>
             <div>
-                <CreateForm refreshPosts={getPosts} />
+                <CreateForm refreshElements={getPosts} type='post' />
             </div>
             <div>
                 {postsList?.map((post) => <Post post={post}/>)}
