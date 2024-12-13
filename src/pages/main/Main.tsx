@@ -10,7 +10,8 @@ export interface Post {
     userId: string,
     username: string,
     content: string,
-    timeStamp: Timestamp
+    timeStamp: Timestamp,
+    attachment?:string
 }
 
 export const Main = () => {

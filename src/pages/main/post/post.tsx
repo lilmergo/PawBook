@@ -1,6 +1,6 @@
 import { Post as IPost } from "../Main";
 import { auth, db } from "../../../config/firebase";
-import { addDoc, collection, query, where, getDocs, deleteDoc, doc, getDoc, Timestamp, orderBy } from "firebase/firestore";
+import { collection, query, where, getDocs, deleteDoc, doc, getDoc, Timestamp, orderBy } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
 import { Card, CardContent, Typography, Button, Box, Avatar, Grid2, IconButton, Icon, TextField } from "@mui/material";
@@ -63,6 +63,7 @@ export const Post = (props: Props) => {
                     <Typography variant="body1" color="text.primary">
                         {post.content}
                     </Typography>
+                    {post.attachment && <img src={post.attachment} style={{maxWidth:"inherit"}}/>}
 
                     <Box>
                         {/* Like Button */}
