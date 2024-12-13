@@ -11,13 +11,13 @@ import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDKKQE1p7GqTxghO66NorzcNswevJF8j70",
-  authDomain: "react-social-94663.firebaseapp.com",
-  projectId: "react-social-94663",
-  storageBucket: "react-social-94663.firebasestorage.app",
-  messagingSenderId: "949338064256",
-  appId: "1:949338064256:web:fa27ebb1d62671a0582d65",
-  measurementId: "G-ZB4YEFYHZM"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  appId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
