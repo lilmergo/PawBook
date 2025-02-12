@@ -36,6 +36,7 @@ export const Post = (props: Props) => {
 
             const fetchedPhotoUrl = userAvatar.docs[0]?.data()['photoURL'];
             setPhotoURL(fetchedPhotoUrl || ""); 
+            console.log('avatar set: '+fetchedPhotoUrl);
         } catch (error) {
             console.error("Error fetching avatar:", error);
         }
@@ -60,7 +61,7 @@ export const Post = (props: Props) => {
                     </Typography>
 
                     {/* Post Description */}
-                    <Typography variant="body1" color="text.primary">
+                    <Typography variant="body1" color="text.primary" whiteSpace="pre-wrap">
                         {post.content}
                     </Typography>
                     {post.attachment && <img src={post.attachment} style={{maxWidth:"inherit"}}/>}

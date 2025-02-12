@@ -64,6 +64,13 @@ export const Navbar = () => {
                             >
                                 Logout
                             </MenuItem>
+                            <MenuItem
+                                onClick={() => {
+                                    navigate('/profile');
+                                }}
+                            >
+                                Profile
+                            </MenuItem>
                         </Menu>
                     </Box>
                 )}

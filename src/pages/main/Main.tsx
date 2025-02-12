@@ -33,7 +33,7 @@ export const Main = () => {
                 <CreateForm refreshElements={getPosts} type='post' />
             </div>
             <div>
-                {postsList?.map((post) => <Post post={post}/>)}
+                {postsList?.map((post) => <Post key={post.id} post={post}/>)}
             </div>
         </>
     )

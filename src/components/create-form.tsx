@@ -62,7 +62,7 @@ export const CreateForm = (props: Props) => {
     const onCreateContent = async (data: CreateFormData) => {
         let attachmentUrl = null;
         try {
-            if (data.attachment ) {
+            if (data.attachment &&data.attachment[0] ) {
                 const file = data.attachment[0];
                 const fileRef = ref(storage, `attachments/${user?.uid}/${file.name}`);
                 const snapshot = await uploadBytes(fileRef, file);
@@ -91,7 +91,20 @@ export const CreateForm = (props: Props) => {
                     </Grid2>
                     <Grid2 size="grow">
                         <form onSubmit={handleSubmit(onCreateContent)}>
-                            <TextField {...register("content")} fullWidth placeholder='Wuff wuff!' value={cardContent} onChange={(e) => setCardContent(e.target.value)} />
+                            <TextField {
+                                ...register("content")} 
+                                fullWidth 
+                                placeholder='Wuff wuff!' 
+                                value={cardContent} 
+                                onChange={(e) => setCardContent(e.target.value)} 
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        e.preventDefault(); // Prevent default form submission
+                                        setCardContent((prev) => prev + '\n'); // Add a new line
+                                    }
+                                }}
+                                multiline // Allow multiple lines in the TextField
+                                />
                             <p style={{ color: "red" }}>{errors.content?.message}</p>
                             <input type='file' {...register("attachment")} />
                             <input type='submit' value={'Post'} style={buttonStyle} />
